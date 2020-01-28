@@ -1,0 +1,35 @@
+{
+  "_args": [
+    [
+      "verto@0.2.2"
+    ]
+  ],
+  "_from": "verto@0.2.2",
+  "_id": "verto@0.2.2",
+  "_inBundle": false,
+  "_location": "/verto",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "verto@0.2.2",
+    "name": "verto",
+    "escapedName": "verto",
+    "rawSpec": "0.2.2",
+    "saveSpec": null,
+    "fetchSpec": "0.2.2"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_spec": "0.2.2",
+  "description": "The jQuery library which connects and deals with FreeSWITCH mod_verto through a web socket.",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch": "*"
+  },
+  "license": "MPL 1.1",
+  "name": "verto",
+  "version": "0.2.2"
+}
