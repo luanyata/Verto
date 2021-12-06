@@ -29,7 +29,7 @@
  *
  */
 
-(function($) {
+(function ($) {
   // Find the line in sdpLines that starts with |prefix|, and, if specified,
   // contains |substr| (case-insensitive search).
   function findLine(sdpLines, prefix, substr) {
@@ -75,7 +75,7 @@
     return newLine.join(" ");
   }
 
-  $.FSRTC = function(options) {
+  $.FSRTC = function (options) {
     this.options = $.extend(
       {
         useVideo: null,
@@ -88,9 +88,9 @@
         videoParams: {},
         audioParams: {},
         callbacks: {
-          onICEComplete: function() {},
-          onICE: function() {},
-          onOfferSDP: function() {}
+          onICEComplete: function () { },
+          onICE: function () { },
+          onOfferSDP: function () { }
         },
         useStream: null
       },
@@ -121,7 +121,7 @@
 
   $.FSRTC.validRes = [];
 
-  $.FSRTC.prototype.useVideo = function(obj, local) {
+  $.FSRTC.prototype.useVideo = function (obj, local) {
     var self = this;
 
     if (obj) {
@@ -139,13 +139,13 @@
     }
   };
 
-  $.FSRTC.prototype.useStereo = function(on) {
+  $.FSRTC.prototype.useStereo = function (on) {
     var self = this;
     self.options.useStereo = on;
   };
 
   // Sets Opus in stereo if stereo is enabled, by adding the stereo=1 fmtp param.
-  $.FSRTC.prototype.stereoHack = function(sdp) {
+  $.FSRTC.prototype.stereoHack = function (sdp) {
     var self = this;
 
     if (!self.options.useStereo) {
@@ -185,7 +185,7 @@
     return sdp;
   };
 
-  function setCompat() {}
+  function setCompat() { }
 
   function checkCompat() {
     return true;
@@ -249,7 +249,7 @@
     doCallback(self, "onICESDP", msg);
   }
 
-  FSRTCattachMediaStream = function(element, stream) {
+  FSRTCattachMediaStream = function (element, stream) {
     if (typeof element.srcObject !== "undefined") {
       element.srcObject = stream;
     } else {
@@ -285,7 +285,7 @@
     doCallback(self, "onOfferSDP");
   }
 
-  $.FSRTC.prototype.answer = function(sdp, onSuccess, onError) {
+  $.FSRTC.prototype.answer = function (sdp, onSuccess, onError) {
     this.peer.addAnswerSDP(
       {
         type: "answer",
@@ -296,14 +296,14 @@
     );
   };
 
-  $.FSRTC.prototype.stopPeer = function() {
+  $.FSRTC.prototype.stopPeer = function () {
     if (self.peer) {
       console.log("stopping peer");
       self.peer.stop();
     }
   };
 
-  $.FSRTC.prototype.stop = function() {
+  $.FSRTC.prototype.stop = function () {
     var self = this;
 
     if (self.options.useVideo) {
@@ -314,7 +314,7 @@
     if (self.localStream && !self.options.useStream) {
       var tracks = self.localStream.getTracks();
       console.log("Stopping localStream tracks:", tracks);
-      tracks.forEach(function(track) {
+      tracks.forEach(function (track) {
         track.stop();
       });
       self.localStream = null;
@@ -327,7 +327,7 @@
     if (self.options.localVideoStream && !self.options.useStream) {
       var tracks = self.options.localVideoStream.getTracks();
       console.log("Stopping localVideoStream tracks:", tracks);
-      tracks.forEach(function(track) {
+      tracks.forEach(function (track) {
         track.stop();
       });
     }
@@ -338,12 +338,12 @@
     }
   };
 
-  $.FSRTC.prototype.getMute = function() {
+  $.FSRTC.prototype.getMute = function () {
     var self = this;
     return self.audioEnabled;
   };
 
-  $.FSRTC.prototype.setMute = function(what) {
+  $.FSRTC.prototype.setMute = function (what) {
     var self = this;
     if (!self.localStream) {
       return false;
@@ -370,12 +370,12 @@
     return !self.audioEnabled;
   };
 
-  $.FSRTC.prototype.getVideoMute = function() {
+  $.FSRTC.prototype.getVideoMute = function () {
     var self = this;
     return self.videoEnabled;
   };
 
-  $.FSRTC.prototype.setVideoMute = function(what) {
+  $.FSRTC.prototype.setVideoMute = function (what) {
     var self = this;
     if (!self.localStream) {
       return false;
@@ -402,7 +402,7 @@
     return !self.videoEnabled;
   };
 
-  $.FSRTC.prototype.createAnswer = function(params) {
+  $.FSRTC.prototype.createAnswer = function (params) {
     var self = this;
     self.type = "answer";
     self.remoteSDP = params.sdp;
@@ -414,19 +414,19 @@
       self.peer = FSRTCPeerConnection({
         type: self.type,
         attachStream: self.localStream,
-        onICE: function(candidate) {
+        onICE: function (candidate) {
           return onICE(self, candidate);
         },
-        onICEComplete: function() {
+        onICEComplete: function () {
           return onICEComplete(self);
         },
-        onRemoteStream: function(stream) {
+        onRemoteStream: function (stream) {
           return onRemoteStream(self, stream);
         },
-        onICESDP: function(sdp) {
+        onICESDP: function (sdp) {
           return onICESDP(self, sdp);
         },
-        onChannelError: function(e) {
+        onChannelError: function (e) {
           return onChannelError(self, e);
         },
         constraints: self.constraints,
@@ -463,11 +463,11 @@
         localVideo: self.options.localVideo,
         useCameraLabel: self.options.useCameraLabel,
         useMicLabel: self.options.useMicLabel,
-        onsuccess: function(e) {
+        onsuccess: function (e) {
           self.options.localVideoStream = e;
           console.log("local video ready");
         },
-        onerror: function(e) {
+        onerror: function (e) {
           console.error("local video error!", e);
         }
       });
@@ -532,11 +532,11 @@
         localVideo: obj.options.localVideo,
         useCameraLabel: obj.options.useCameraLabel,
         useMicLabel: obj.options.useMicLabel,
-        onsuccess: function(e) {
+        onsuccess: function (e) {
           obj.options.localVideoStream = e;
           console.log("local video ready");
         },
-        onerror: function(e) {
+        onerror: function (e) {
           console.error("local video error!", e);
         }
       });
@@ -629,7 +629,7 @@
     return { audio: audio, video: video, useVideo: useVideo };
   }
 
-  $.FSRTC.prototype.call = function(profile) {
+  $.FSRTC.prototype.call = function (profile) {
     checkCompat();
 
     var self = this;
@@ -654,24 +654,24 @@
       self.peer = FSRTCPeerConnection({
         type: self.type,
         attachStream: self.localStream,
-        onICE: function(candidate) {
+        onICE: function (candidate) {
           return onICE(self, candidate);
         },
-        onICEComplete: function() {
+        onICEComplete: function () {
           return onICEComplete(self);
         },
         onRemoteStream: screen
-          ? function(stream) {}
-          : function(stream) {
-              return onRemoteStream(self, stream);
-            },
-        onOfferSDP: function(sdp) {
+          ? function (stream) { }
+          : function (stream) {
+            return onRemoteStream(self, stream);
+          },
+        onOfferSDP: function (sdp) {
           return onOfferSDP(self, sdp);
         },
-        onICESDP: function(sdp) {
+        onICESDP: function (sdp) {
           return onICESDP(self, sdp);
         },
-        onChannelError: function(e) {
+        onChannelError: function (e) {
           return onChannelError(self, e);
         },
         constraints: self.constraints,
@@ -747,7 +747,7 @@
     }
 
     config.bundlePolicy = "max-compat";
-    config.sdpSemantics = "plan-b";
+    config.sdpSemantics = "unified-plan";
 
     var peer = new window.RTCPeerConnection(config);
 
@@ -771,7 +771,7 @@
       }
     }
 
-    peer.onicecandidate = function(event) {
+    peer.onicecandidate = function (event) {
       if (done) {
         return;
       }
@@ -801,10 +801,10 @@
       // FreeSWITCH currently orders its answer SDP such that audio m-lines
       // always come first, adding the tracks to the peer in that order
       // prevents possible m-line ordering validation errors on the client.
-      options.attachStream.getAudioTracks().forEach(function(track) {
+      options.attachStream.getAudioTracks().forEach(function (track) {
         peer.addTrack(track, options.attachStream);
       });
-      options.attachStream.getVideoTracks().forEach(function(track) {
+      options.attachStream.getVideoTracks().forEach(function (track) {
         peer.addTrack(track, options.attachStream);
       });
     }
@@ -820,12 +820,12 @@
     }
 
     // peer.onaddstream = function(event) { // OLD API
-    peer.ontrack = function(event) {
+    peer.ontrack = function (event) {
       console.log("Peer Track", event);
       // var remoteMediaStream = event.stream;
       var remoteMediaStream = event.streams[0];
 
-      remoteMediaStream.oninactive = function() {
+      remoteMediaStream.oninactive = function () {
         if (options.onRemoteStreamEnded)
           options.onRemoteStreamEnded(remoteMediaStream);
       };
@@ -843,7 +843,7 @@
       if (!options.onOfferSDP) return;
 
       peer.createOffer(
-        function(sessionDescription) {
+        function (sessionDescription) {
           sessionDescription.sdp = serializeSdp(sessionDescription.sdp);
           peer.setLocalDescription(sessionDescription);
           options.onOfferSDP(sessionDescription);
@@ -863,7 +863,7 @@
         onSdpSuccess,
         onSdpError
       );
-      peer.createAnswer(function(sessionDescription) {
+      peer.createAnswer(function (sessionDescription) {
         sessionDescription.sdp = serializeSdp(sessionDescription.sdp);
         peer.setLocalDescription(sessionDescription);
         if (options.onAnswerSDP) {
@@ -912,9 +912,9 @@
       sdp =
         sdp.indexOf("a=crypto") == -1
           ? sdp.replace(
-              /c=IN/g,
-              "a=crypto:1 AES_CM_128_HMAC_SHA1_80 inline:" + inline + "c=IN"
-            )
+            /c=IN/g,
+            "a=crypto:1 AES_CM_128_HMAC_SHA1_80 inline:" + inline + "c=IN"
+          )
           : sdp;
 
       return sdp;
@@ -944,19 +944,19 @@
     }
 
     function setChannelEvents() {
-      channel.onmessage = function(event) {
+      channel.onmessage = function (event) {
         if (options.onChannelMessage) options.onChannelMessage(event);
       };
 
-      channel.onopen = function() {
+      channel.onopen = function () {
         if (options.onChannelOpened) options.onChannelOpened(channel);
       };
-      channel.onclose = function(event) {
+      channel.onclose = function (event) {
         if (options.onChannelClosed) options.onChannelClosed(event);
 
         console.warn("WebRTC DataChannel closed", event);
       };
-      channel.onerror = function(event) {
+      channel.onerror = function (event) {
         if (options.onChannelError) options.onChannelError(event);
 
         console.error("WebRTC DataChannel error", event);
@@ -964,7 +964,7 @@
     }
 
     function openAnswererChannel() {
-      peer.ondatachannel = function(event) {
+      peer.ondatachannel = function (event) {
         channel = event.channel;
         channel.binaryType = "blob";
         setChannelEvents();
@@ -978,7 +978,7 @@
       log("Error in fake:true");
     }
 
-    function onSdpSuccess() {}
+    function onSdpSuccess() { }
 
     function onSdpError(e) {
       if (options.onChannelError) {
@@ -988,14 +988,14 @@
     }
 
     return {
-      addAnswerSDP: function(sdp, cbSuccess, cbError) {
+      addAnswerSDP: function (sdp, cbSuccess, cbError) {
         peer.setRemoteDescription(
           new window.RTCSessionDescription(sdp),
           cbSuccess ? cbSuccess : onSdpSuccess,
           cbError ? cbError : onSdpError
         );
       },
-      addICE: function(candidate) {
+      addICE: function (candidate) {
         peer.addIceCandidate(
           new window.RTCIceCandidate({
             sdpMLineIndex: candidate.sdpMLineIndex,
@@ -1006,16 +1006,16 @@
 
       peer: peer,
       channel: channel,
-      sendData: function(message) {
+      sendData: function (message) {
         if (channel) {
           channel.send(message);
         }
       },
 
-      stop: function() {
+      stop: function () {
         if (options.attachStream instanceof MediaStream) {
           var tracks = options.attachStream.getTracks();
-          tracks.forEach(function(track) {
+          tracks.forEach(function (track) {
             track.stop();
           });
           options.attachStream = null;
@@ -1059,12 +1059,12 @@
 
     if (constraint.deviceId) {
       if (typeof constraint.deviceId === "string") {
-        return new Promise(function(resolve) {
+        return new Promise(function (resolve) {
           assureMediaInputId(fallbackLabel, constraint.deviceId)
-            .then(function(id) {
+            .then(function (id) {
               resolve(Object.assign({}, constraint, { deviceId: id }));
             })
-            .catch(function() {
+            .catch(function () {
               resolve(constraint);
             });
         });
@@ -1074,12 +1074,12 @@
         typeof constraint.deviceId === "object" &&
         typeof constraint.deviceId.exact === "string"
       ) {
-        return new Promise(function(resolve) {
+        return new Promise(function (resolve) {
           assureMediaInputId(fallbackLabel, constraint.deviceId.exact)
-            .then(function(id) {
+            .then(function (id) {
               resolve(assignMediaIdToConstraint(id, constraint));
             })
-            .catch(function() {
+            .catch(function () {
               resolve(constraint);
             });
         });
@@ -1092,7 +1092,7 @@
   function trustyGetUserMedia(options, constraints) {
     navigator.mediaDevices
       .getUserMedia(constraints)
-      .then(function(stream) {
+      .then(function (stream) {
         if (options.localVideo) {
           activateLocalVideo(options.localVideo, stream);
         }
@@ -1103,9 +1103,9 @@
       })
       .catch(
         options.onerror ||
-          function(e) {
-            console.error(e);
-          }
+        function (e) {
+          console.error(e);
+        }
       );
   }
 
@@ -1123,13 +1123,13 @@
       assureConstraintByLabel(constraints.audio, options.useMicLabel),
       assureConstraintByLabel(constraints.video, options.useCameraLabel)
     ])
-      .then(function(assurances) {
+      .then(function (assurances) {
         trustyGetUserMedia(options, {
           audio: assurances[0],
           video: assurances[1]
         });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error(
           "Unexpected error on media id assurance attempts:",
           error,
@@ -1138,7 +1138,7 @@
         );
       });
   }
-  $.FSRTC.resSupported = function(w, h) {
+  $.FSRTC.resSupported = function (w, h) {
     for (var i in $.FSRTC.validRes) {
       if ($.FSRTC.validRes[i][0] == w && $.FSRTC.validRes[i][1] == h) {
         return true;
@@ -1148,7 +1148,7 @@
     return false;
   };
 
-  $.FSRTC.bestResSupported = function() {
+  $.FSRTC.bestResSupported = function () {
     var w = 0,
       h = 0;
 
@@ -1174,7 +1174,7 @@
   var resI = 0;
   var ttl = 0;
 
-  var checkRes = function(cam, func) {
+  var checkRes = function (cam, func) {
     if (resI >= resList.length) {
       var res = {
         validRes: $.FSRTC.validRes,
@@ -1202,22 +1202,22 @@
 
     getUserMedia({
       constraints: { audio: ttl++ == 0, video: video },
-      onsuccess: function(e) {
-        e.getTracks().forEach(function(track) {
+      onsuccess: function (e) {
+        e.getTracks().forEach(function (track) {
           track.stop();
         });
         console.info(w + "x" + h + " supported.");
         $.FSRTC.validRes.push([w, h]);
         checkRes(cam, func);
       },
-      onerror: function(e) {
+      onerror: function (e) {
         console.warn(w + "x" + h + " not supported.");
         checkRes(cam, func);
       }
     });
   };
 
-  $.FSRTC.getValidRes = function(cam, func) {
+  $.FSRTC.getValidRes = function (cam, func) {
     var used = [];
     var cached = localStorage.getItem("res_" + cam);
 
@@ -1239,11 +1239,11 @@
     checkRes(cam, func);
   };
 
-  $.FSRTC.checkPerms = function(runtime, check_audio, check_video) {
+  $.FSRTC.checkPerms = function (runtime, check_audio, check_video) {
     getUserMedia({
       constraints: { audio: check_audio, video: check_video },
-      onsuccess: function(e) {
-        e.getTracks().forEach(function(track) {
+      onsuccess: function (e) {
+        e.getTracks().forEach(function (track) {
           track.stop();
         });
         console.info("media perm init complete");
@@ -1251,7 +1251,7 @@
           setTimeout(runtime, 100, true);
         }
       },
-      onerror: function(e) {
+      onerror: function (e) {
         if (check_video && check_audio) {
           console.error("error, retesting with audio params only");
           return $.FSRTC.checkPerms(runtime, check_audio, false);

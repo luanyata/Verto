@@ -6,6 +6,10 @@ The jQuery library which connects and deals with FreeSWITCH mod_verto through a 
 
 ## Checklog:
 
+06-12-2022:
+
+- Atualização do ```sdpSemantics``` de ```sdp-b``` para ```unified-plan```
+
 28-01-2020:
 
 - Remoção do ring
